@@ -1,11 +1,11 @@
 # Simple MUD in RUBY without DB
-
-This is an attempt to get started on a basic Object based MUD in RUBY.
-In order to test it just run:
+## Running the game
 
 ```ruby
 ruby run.rb
 ```
+## Stuff
+This is an attempt to get started on a basic Object based MUD in RUBY.
 It seems that storing items on a csv based map model sux, so it might be time to move on to active record.
 
 Most basic settings to connect db to ruby with active record and without rails [link](https://til.codes/connecting-a-ruby-app-to-active-record-without-rails/).
