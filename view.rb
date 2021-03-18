@@ -1,18 +1,64 @@
 require_relative 'character'
+require 'colorize'
 
 class View
   attr_reader :name
-  
+
   def start_game
     puts `clear`
-    puts " Welcome to this MUD\n Type 'look' to see where you are on the map: "
+    puts"
+
+
+
+
+
+
+                    :+:                                              +-
+                 .=%@=                                                %%-
+               =#@@@+                                                 .%@@=
+            :*@@@@@+                                                   :@@@@=
+          =%@@@@@@#                                                     =@@@@@=
+       .+@@@@@@@@@.                    :                                 #@@@@@%-
+     .+@@@@@@@@@@-                 :+#@@@+:                              .@@@@@@@%:
+   .*@@@@@@@@@@@#              .-#@@@@@@@@@@*-                            +@@@@@@@@*.
+   :@@@@@@@@@@@@:            =#@@@@@@@@@@@@@@@@*-                        .*@@@@@@@@@@=
+    +@@@@@@@@@@@=---::.   -#@@@@@@@@@@@@@@@@@@@@@@*=.         .. .:-=+*%@@@@@@@@@@@@@@+
+     %@@@@@@@@@@@@@@@@@. #@@@@@@@@@@@@@@@@@@@@@@@@@@@#=:.:-+#@@# +@@@@@@@@@@@@@@@@@@@@-
+     .@@@@@@@@@@@@@@@@@. #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@- %@@@@@@@@@@@@@@@@@@*
+      :@@@@@@@@@@@@@@@@  %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@% :@@@@@@@@@@@@@@@@@*
+       :@@@@@@@@@@@@@@# :@@@@@@@@#-=+******+++@@@@@@@@@@@@@@@@@@@: %@@@@@@@@@@@@@@@+
+        :@@@@@@@@@@@@@- .#@@@@@@@#            .#@@@@@@@@@@@@@@@@@* +@@@@@@@@@@@@@@-
+         .#@@@@@@@@@@@@+. -#@@@@@@              +@@@@@@@@@@@@@@@@@ :@@@@@@@@@#*=-.
+           -*#@@@@@@@@@@@*: .+@@@@%%#+-.        -@@=::..   -@@@@@@: @@%#+-:
+               .:-=+*#%@@@@%+. :+%@@@@@@@*=. .=%@@@*-    =%@@@@@@@: .
+                         .:--=-   :%@@@@@@@@%@@+::%@@@**%##%@@@%-
+                                   %@@@@@@@@@@=   @@@@@@=    .:
+                                   @@@@@@@@@@%-+*+%@@@@@=
+                                   @@@@@@@@@@@@@@@@@@@@@-
+                                   @@@@@@@@@@@@@@@@@@@@@-
+                                  .@@@@@@@@@@@@@@@@@@@@@-
+                                  :@@@@@@@@@@@@@@@@@@@@@:
+                                  -@@@@@@@@@@@@@@@@@@@@@:
+                                  -@@@@@@@@@@@@@@@@@@@@@:
+                                  =@@@@@@@@@@@%.@@@@%@@@:
+                                  +@@@%-%@@@@@: +@@@.=@@.
+                                  +@@=  =@@@@=  .@@#  =@.
+                                  *+     @@@#    +@-   -
+                                         +@@.     #
+                                         .@-
+                                          -
+
+
+
+                                                                                          ".red
+    puts " Welcome...\n Type " + 'look'.red + " to see where you are on the map: "
     puts "The following commands will also work:"
-    puts "stats to see your character info"
-    puts "inv to see your inventory"
-    puts "drop to drop an item"
-    puts "save to save your location for next time"
-    puts "n for north, s for south and so on"
-    puts "stop to stop the program"
+    puts "stats".red + " to see your character info"
+    puts "inv".red + " to see your inventory"
+    puts "drop".red + " to drop an item"
+    puts "save".red + " to save your location for next time"
+    puts "n".red + " for north," + " s".red + " for south and so on"
+    puts "stop".red + " to stop the program"
   end
 
   def show_map(map_tile_info)
