@@ -28,7 +28,7 @@ class View
   end
 
   def display_tasks
-    possibilities = ["Which direction are you going?", "What do you want to do?", "Please enter a command..."]
+    possibilities = ["Next...", "What do you want to do?", "Please enter a command..."]
     puts "\n"
     puts possibilities.sample
   end
