@@ -1,4 +1,8 @@
+require_relative 'character'
+
 class View
+  attr_reader :name
+  
   def start_game
     puts `clear`
     puts " Welcome to this MUD\n Type 'look' to see where you are on the map: "
@@ -30,6 +34,6 @@ class View
   def display_tasks
     possibilities = ["Next...", "What do you want to do?", "Please enter a command..."]
     puts "\n"
-    puts possibilities.sample
+    puts possibilities.sample + "#{@name}"
   end
 end

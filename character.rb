@@ -1,6 +1,7 @@
 require_relative 'view'
 require_relative 'inventory'
 require 'csv'
+require 'colorize'
 
 class Character
   attr_reader :coords, :name, :race, :inventory
@@ -54,19 +55,20 @@ class Character
       map.maptiles.each do |tile|
         if tile.coords == "#{coords[0]} #{coords[1]}"
           if tile.items != {}
-            return info = tile.info + " " + tile.items
+            return info = "[#{tile.info}]".red + " there are: " + tile.items
           else
-            return info = tile.info
+            return info = "[#{tile.info}]".red
           end
         end
       end
     else
-      return info = "no map yet"
+      return info = "flatlands"
     end
   end
 
   def default_coords
     # This is why we need to move to Active Record
+    #Unless?
     @coords = {
       :x => self.coords[0].split(' ')[0].to_i,
       :y => self.coords[0].split(' ')[1].to_i

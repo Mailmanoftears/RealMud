@@ -1,4 +1,5 @@
 # Simple MUD in RUBY without DB
+##WARNING: REQUIRES RUBY GEM: COLORIZE
 ![logo](http://bakadesign.dk/backoffice/wp-content/uploads/2018/11/Orks.svg)
 ```ruby
 ruby run.rb
@@ -17,3 +18,11 @@ could help you with some rare information.
 
 ...
 Yeah weird maybe you should check that out(in work)
+
+
+
+#How to install colorize!
+Simply copy this command into the terminal:
+```commandline
+gem install colorize
+```
