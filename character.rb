@@ -21,9 +21,19 @@ class Character
     @inventory = inventory
   end
 
-  def add_to_inventory
-
-  end
+  # def add_to_inventory(item)
+  #   i = 0
+  #   suc = 0
+  #   while suc = 0 do i + 1
+  #     if @inventory[i].empty?
+  #       self.inventory.items.each_with_index do |item, index|
+  #         if item.name == item_name
+  #           self.inventory.items.(index)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   def drop_item(map, coords) # Would be cool to drop on map => (map)
     puts "Which item do you want to drop?"
@@ -62,6 +72,7 @@ class Character
       :y => self.coords[0].split(' ')[1].to_i
     }
   end
+
 
   def save(char)
     coords = "#{char.coords[:x]} #{char.coords[:y]}"
