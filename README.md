@@ -6,7 +6,7 @@ ruby run.rb
 You wake up in a world of pain and find a bag with a scroll in it:
 
 Pain                  
- The            is long gone but his memories pain
+ The ********** is long gone but his memories pain
  the people so much that even his name is         
  forbidden, your mission is to find it out and why
 find out why....                                  
