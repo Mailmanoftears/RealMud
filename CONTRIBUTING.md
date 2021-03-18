@@ -1,3 +1,3 @@
 Contributers are listed below:
-Founder: VenomIsmael
+Founder: Mailmanoftears
 Member: wabi96sabi
