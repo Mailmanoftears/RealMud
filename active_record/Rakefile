@@ -1,0 +1,75 @@
+require 'rspec/core/rake_task'
+require_relative 'config/application'
+
+task :default do
+  ruby "config/run.rb"
+end
+
+namespace :db do
+  desc 'create the database'
+  task :create do
+    puts "Creating #{db_path}..."
+    touch db_path
+  end
+
+  desc 'drop the database'
+  task :drop do
+    puts "Deleting #{db_path}..."
+    rm_f db_path
+  end
+
+  desc 'migrate the database (options: VERSION=x).'
+  task :migrate do
+    m = ActiveRecord::MigrationContext.new(File.dirname(__FILE__) + '/db/migrate', schema_migration = ActiveRecord::SchemaMigration)
+    ActiveRecord::Migration.verbose = true
+    version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
+    m.migrate(version)
+  end
+
+  desc 'Retrieves the current schema version number'
+  task :version do
+    puts "Current version: #{ActiveRecord::MigrationContext.current_version}"
+  end
+
+  desc 'populate the database with sample data'
+  task :seed do
+    require "#{__dir__}/db/seeds.rb"
+  end
+
+  desc 'Gives you a timestamp for your migration file name'
+  task :timestamp do
+    puts DateTime.now.strftime('%Y%m%d%H%M%S')
+  end
+
+  desc 'drop, create, migrate and seed the database'
+  task :setup do
+    puts "Just doing some db magic"
+    rm_f db_path
+    touch db_path
+
+    m = ActiveRecord::MigrationContext.new(File.dirname(__FILE__) + '/db/migrate', schema_migration = ActiveRecord::SchemaMigration)
+
+    ActiveRecord::Migration.verbose = true
+    version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
+    m.migrate(version)
+
+    require "#{__dir__}/db/seeds.rb"
+    # for the time being we will  create quests this way, but it would be better to have some seperation here
+    require "#{__dir__}/db/quest_seed.rb"
+    # for now we will create monsters as well in this seperate file
+    require "#{__dir__}/db/monster_seed.rb"
+
+    # should create a schema
+    filename = "db/schema.rb"
+
+    File.open(filename, "w:utf-8") do |file|
+      ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
+    end
+  end
+
+  private
+
+  def db_path
+    ActiveRecord::Base.configurations['development']['database']
+  end
+end
