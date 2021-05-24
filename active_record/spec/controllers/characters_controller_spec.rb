@@ -10,6 +10,7 @@ describe "CharacterController" do
   before(:each) do
     create_db
     migrate
+    # byebug
     MapTile.create(name: "Town Center", description: "The busy town's center", x_coord: 0, y_coord: 0)
     MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 0, y_coord: 1)
   end

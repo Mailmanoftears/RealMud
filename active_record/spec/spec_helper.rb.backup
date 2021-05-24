@@ -2,10 +2,9 @@ require_relative "../config/application"
 ActiveRecord::Base.logger = nil
 
 def migrate(version = nil)
-  m = ActiveRecord::MigrationContext.new(File.dirname(__FILE__) + '../db/migrate')
-  ActiveRecord::Migration.verbose = true
-  version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
-  m.migrate(version)
+  ActiveRecord::Migration.verbose = false
+  ActiveRecord::Migrator.migrations_paths << File.expand_path(File.dirname(__FILE__), '../db/migrate')
+  ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths, version)
 end
 
 def create_db
