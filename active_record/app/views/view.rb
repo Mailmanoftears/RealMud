@@ -1,5 +1,8 @@
+require "rainbow"
+
 class View
   def initialize
+    @task = "Nothing"
     @map_pic = Map.new
     @char = CharView.new
     @pet = PetView.new
@@ -19,8 +22,21 @@ class View
     @map_pic.draw_map
   end
 
+  def set_task(task)
+    @task = task
+  end
+
+  def remove_task
+    @task = "Nothing"
+  end
+
   def display_tasks
-    puts "\n****----****"
+    if @task != "Nothing"
+      puts Rainbow("Quest: #{@task}").green
+      puts "****----****"
+    else
+      puts "\n****----****"
+    end
     print "Enter your command:\n> "
   end
 

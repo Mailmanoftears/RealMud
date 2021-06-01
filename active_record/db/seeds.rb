@@ -4,6 +4,7 @@ Character.create(name: "Govin", race: "Elf", discipline: "mage", hitpoints: 26, 
 Character.create(name: "Donder", race: "Human", discipline: "warrior", hitpoints: 22, strength: 9, exp: 0, x_coord: 0, y_coord: 0, level: 1, alive: true)
 Character.create(name: "Glimli", race: "Dwarf", discipline: "warrior", hitpoints: 30, strength: 11, exp: 0, x_coord: 0, y_coord: 0, level: 1, alive: true)
 Character.create(name: "Ormir", race: "Orc", discipline: "warrior", hitpoints: 32, strength: 12, exp: 0, x_coord: 0, y_coord: 0, level: 1, alive: true)
+Character.create(name: "Tra", race: "Necromancer", discipline: "Gravedigger", hitpoints: 50, strength: 10, exp: 0, x_coord: 5, y_coord: 3, level: 1, alive: true)
 
 # All inventories
 12.times do Inventory.create(name: "Satchel") end
@@ -18,10 +19,10 @@ Inventory.find(5).update(character_id: 5)
 # Character's weapons and items
 Inventory.where(character_id: 1).first.weapons.create(name: "Dagger", damage: 2, amount: 1)
 Inventory.where(character_id: 1).first.inventory_items.create(name: "Coins", amount: 24)
-Inventory.where(character_id: 2).first.weapons.create(name: "Sword", damage: 4, amount: 1)
+Inventory.where(character_id: 2).first.weapons.create(name: "Sword", damage: 10, amount: 1)
 Inventory.where(character_id: 3).first.inventory_items.create(name: "Apple", amount: 1)
-Inventory.where(character_id: 4).first.weapons.create(name: "Axe", damage: 3, amount: 1)
-Inventory.where(character_id: 5).first.weapons.create(name: "Axe", damage: 3, amount: 2)
+Inventory.where(character_id: 4).first.weapons.create(name: "Axe", damage: 8, amount: 1)
+Inventory.where(character_id: 5).first.weapons.create(name: "Axe", damage: 6, amount: 2)
 
 # Pets
 Pet.create(name: "Smitty", kind: "Racoon", description: "A shaggy looking rodent", strength: 4, x_coord: 0, y_coord: 0, alive: true)
@@ -54,6 +55,7 @@ Inventory.where(bot_id: 1).first.weapons.create(name: "Club", damage: 2, amount:
 Inventory.where(bot_id: 1).first.inventory_items.create(name: "Coins", amount: 7)
 Inventory.where(bot_id: 6).first.weapons.create(name: "Thunder Hammer", damage: 4, amount: 1, value: 20)
 
+#Dusty outskirts of necromancer city, you shouldn't expect to meet any necromancers or pass over into necromancer city though.
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: -2, y_coord: 0)
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: -1, y_coord: 0)
 MapTile.create(name: "Town Center", description: "The busy town's center", x_coord: 0, y_coord: 0)
@@ -69,7 +71,7 @@ MapTile.create(name: "Temple", description: "Temple of Samael", x_coord: 1, y_co
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 2, y_coord: 0)
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 2, y_coord: 1)
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 2, y_coord: -1)
-MapTile.create(name: "City of Necromancers", description: "A dark big City", x_coord: 3, y_coord: -3)
+
 MapTile.create(name: "Library", description: "The town's public library", x_coord: 3, y_coord: -2)
 MapTile.create(name: "Fighting Arena", description: "Molnir's Arena", x_coord: 2, y_coord: -2)
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 3, y_coord: 0)
@@ -78,6 +80,33 @@ MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 3, y_coo
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 4, y_coord: 0)
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 4, y_coord: 1)
 MapTile.create(name: "Road", description: "Just a dusty road", x_coord: 4, y_coord: -1)
+#Necromancer City located from 5, -1 to 90, -90 a perfect black city only accessible by necromancers from spawning there.
+MapTile.create(name: "City of Necromancers", description: "A dark big City", x_coord: 5, y_coord: -1)
+MapTile.create(name: "City of Necromancers", description: "Necromancer City, just a very dark city.", x_coord: 5, y_coord:-2)
+MapTile.create(name: "City of Necromancers", description: "Necromancer City", x_coord: 5, y_coord: -2)
+MapTile.create(name: "City of Necromancers", description: "Just a City of Necromancers", x_coord: 6, y_coord: -2)
+MapTile.create(name: "City of Necromancers", description: "Just City of Necromancers", x_coord: 6, y_coord: -3)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers's black square", x_coord: 6, y_coord: -4)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 6, y_coord: -5)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -5)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -6)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -7)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -8)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 6, y_coord: -6)
+MapTile.create(name: "City of Necromancers", description: "Just a City of Necromancers", x_coord: 6, y_coord: -7)
+MapTile.create(name: "City of Necromancers", description: "Just City of Necromancers", x_coord: 6, y_coord: -8)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 6, y_coord: -9)
+MapTile.create(name: "City of Necromancers", description: "A dark big City", x_coord: 6, y_coord: -10)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -1)
+MapTile.create(name: "City of Necromancers Arena", description: "City of Necromancers Arena", x_coord: 7, y_coord: -2)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -3)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 7, y_coord: -4)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 5, y_coord: -3)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 5, y_coord: -4)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 5, y_coord: -5)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 5, y_coord: -6)
+MapTile.create(name: "City of Necromancers", description: "City of Necromancers", x_coord: 6, y_coord: -1)
+
 
 Shop.create(name: "Dusty's Shop", description: "Get your gear here")
 Shop.create(name: "Vindy's Roller Shop", description: "Buy some fun stuff here")
@@ -85,7 +114,7 @@ Shop.create(name: "Logola's Bookstore", description: "Buy some Books here")
 
 Shopkeeper.create(shop_id: 1, name: "Dusty", greeting: "Hi, and welcome to my humble establishment, please take a look around.")
 Shopkeeper.create(shop_id: 2, name: "Vindy", greeting: "Hi there and welcome to Vindy's fun store. What can I do you for?")
-Shopkeeper.create(shop_id: 3, name: "Logola", greeting: "Hi there and welcome to the wonderful world of mystic books.")
+Shopkeeper.create(shop_id: 3, name: "Logola", greeting: "Logola's store, the wonderful world of mystic books...?")
 
 # Inventory of the first shop
 Shop.find(1).inventory_items.create(name: "Coins", amount: 0)
@@ -114,8 +143,8 @@ Shop.find(3).inventory_items.create(name: "Coins", amount: 0)
 MapTile.create(name: "General Store", description: "Dusty's Shoppe", x_coord: 2, y_coord: 2)
 MapTile.find(20).update(shop: Shop.find(1))
 
-MapTile.create(name: "Fun Store", description: "Vindys's Shop", x_coord: 2, y_coord: 3)
+MapTile.create(name: "Fun Store", description: "Vindys's Silly Shop", x_coord: 2, y_coord: 3)
 MapTile.find(21).update(shop: Shop.find(2))
 
-MapTile.create(name: "Book Store", description: "Logolas's Shop", x_coord: 3, y_coord: 2)
+MapTile.create(name: "Book Store", description: "Logolas's Book Shop", x_coord: 3, y_coord: 2)
 MapTile.find(22).update(shop: Shop.find(3))

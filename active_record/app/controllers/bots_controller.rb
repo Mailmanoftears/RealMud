@@ -2,13 +2,17 @@ require "pry-byebug"
 
 class BotsController
   def announce(char)
-    announce_bot(find_bot(char))
+    begin
+      announce_bot(find_bot(char))
+    rescue
+      puts "Sorry #{char.name}...you are a doofus, there is no one here..."
+    end
   end
 
   def search_corpse(char)
     corpse = Locate.corpse(char)
     if corpse
-      puts "You are searching a dead #{corpse.race}..."
+      puts "You are searching a dead #{corpse.race}...😖"
       unless corpse.inventory.inventory_items.empty? && corpse.inventory.weapons.empty?
         corpse.inventory.inventory_items.each do |item|
           puts "You find #{item.name}"
@@ -56,46 +60,51 @@ class BotsController
 
   def fight(char)
     find_bot(char)
-
-    if @bot.first.has_attribute? 'quest_id'
-      puts Rainbow("... you cannot fight a questmaster.").red
+    announce(char)
+    if @bot.empty?
+      puts "#{char.name} strikes the air, looking like a complete idiot...😖\nSomewhere a child laughs."
     else
-      if @bot
-        @bot = @bot.first
+      if @bot.first.has_attribute? 'quest_id'
+        puts Rainbow("... you cannot fight a questmaster.").red
+      else
+        if @bot
+          @bot = @bot.first
 
-      # A fight between to nearly equally strong characters
-      # should last around 4 rounds ...
-        while char.hitpoints > 0 && @bot.hitpoints > 0
-          damage = rand(char.strength)
-          if char.pet
-            bites = rand(char.pet.strength)
-          end
-          counter = rand(@bot.strength)
-          puts "#{char.name} hits #{@bot.name} for #{damage} hitpoints"
-          if char.pet
-            puts Rainbow("#{char.pet.name} hits #{@bot.name} for #{bites} hitpoints").orange.bright
-          end
-          @bot.update(hitpoints: @bot.hitpoints - damage)
-          sleep 1
-          if @bot.hitpoints <= 0
-            puts "#{@bot.name} makes a last gurgling sound..."
+        # A fight between to nearly equally strong characters
+        # should last around 4 rounds ...
+          while char.hitpoints > 0 && @bot.hitpoints > 0
+            damage = rand(char.strength)
+            if char.pet
+              bites = rand(char.pet.strength)
+            end
+            counter = rand(@bot.strength)
+            puts "#{char.name} hits #{@bot.name} for #{damage} hitpoints"
+            if char.pet
+              puts Rainbow("#{char.pet.name} hits #{@bot.name} for #{bites} hitpoints").orange.bright
+            end
+            @bot.update(hitpoints: @bot.hitpoints - damage)
             sleep 1
-            puts "#{@bot.race} has died."
-            @bot.update(alive: false)
-            gain_exp(char, @bot)
-          end
-          unless @bot.hitpoints <= 0
-            puts "#{@bot.name} hits #{char.name} for #{counter} hitpoints"
-            char.update(hitpoints: char.hitpoints - counter)
-            if char.hitpoints <= 0
+            if @bot.hitpoints <= 0
+              puts "#{@bot.name} makes a last gurgling sound..."
               sleep 1
-              puts "#{char.name} has died."
-              char.update(alive: false)
+              puts "#{@bot.race} has died."
+              @bot.update(alive: false)
+              gain_exp(char, @bot)
+            end
+            unless @bot.hitpoints <= 0
+              puts "#{@bot.name} hits #{char.name} for #{counter} hitpoints"
+              char.update(hitpoints: char.hitpoints - counter)
+              if char.hitpoints <= 0
+                sleep 1
+                puts "#{char.name} has died."
+                char.update(alive: false)
+              end
             end
           end
         end
-      end
     end
+    end
+
   end
 
   private
@@ -115,11 +124,12 @@ class BotsController
       @bot = QuestMaster.where(x_coord: char.x_coord, y_coord: char.y_coord)
       unless @bot.empty?
         # binding.pry
-        puts "A... Questmaster"
+        puts "A... Questmaster 😖"
       end
     end
-
+    # binding.pry
     # This needs to change if we want to have more than one bot in a tile
+    # this also breaks if you call fight with no bot available
     if @bot.count == 0
       return nil
     else
@@ -133,7 +143,7 @@ class BotsController
     elsif bot.alive?
       puts "You see a #{bot.race}."
     elsif bot.alive == false
-      puts "You see a dead #{bot.race}."
+      puts "You see a dead #{bot.race} 😖."
     end
   end
 

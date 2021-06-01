@@ -11,6 +11,7 @@ class Router
     @character = 0
     @running = true
     # Just for testing purposes as of now
+    @quest_controller = QuestController.new
     @bot_controller = BotsController.new
     @bots = Bot.all
     @banner = BannerTwo.new
@@ -37,6 +38,7 @@ class Router
     when 's', 'n', 'e', 'w' then @char_controller.move_char(@character, action)
     when 'new' then @char_controller.create
     when 'update' then @char_controller.update(@character)
+    when 'quest' then @quest_controller.switch_quest(@view, @character)
     when 'load' then @character = @char_controller.load
     when 'delete' then @char_controller.destroy
     when 'inv' then @inv_controller.show_inventory(@character)
@@ -93,7 +95,7 @@ class Router
     when ans == "new"
       char = AvatarCreationController.new
       char.create_char
-      char.give_attributes
+      # char.give_attributes
       @character = char.char
     else
       puts "please answer 'y', 'no' or 'new'"

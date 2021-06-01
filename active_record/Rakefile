@@ -1,4 +1,4 @@
-# require 'rspec/core/rake_task'
+require 'rspec/core/rake_task'
 require_relative 'config/application'
 
 task :default do
@@ -20,20 +20,25 @@ namespace :db do
 
   desc 'migrate the database (options: VERSION=x).'
   task :migrate do
-    m = ActiveRecord::MigrationContext.new(File.dirname(__FILE__) + '/db/migrate', schema_migration = ActiveRecord::SchemaMigration)
+    ActiveRecord::Migrator.migrations_paths << \
+      File.dirname(__FILE__) + 'db/migrate'
     ActiveRecord::Migration.verbose = true
     version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
-    m.migrate(version)
+    ActiveRecord::Migrator.migrate(
+      ActiveRecord::Migrator.migrations_paths, version
+    )
   end
 
   desc 'Retrieves the current schema version number'
   task :version do
-    puts "Current version: #{ActiveRecord::MigrationContext.current_version}"
+    puts "Current version: #{ActiveRecord::Migrator.current_version}"
   end
 
   desc 'populate the database with sample data'
   task :seed do
     require "#{__dir__}/db/seeds.rb"
+    require "#{__dir__}/db/quest_seed.rb"
+    require "#{__dir__}/db/monster_seed.rb"
   end
 
   desc 'Gives you a timestamp for your migration file name'
@@ -46,25 +51,18 @@ namespace :db do
     puts "Just doing some db magic"
     rm_f db_path
     touch db_path
-
-    m = ActiveRecord::MigrationContext.new(File.dirname(__FILE__) + '/db/migrate', schema_migration = ActiveRecord::SchemaMigration)
-
+    ActiveRecord::Migrator.migrations_paths << \
+      File.dirname(__FILE__) + 'db/migrate'
     ActiveRecord::Migration.verbose = true
     version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
-    m.migrate(version)
-
+    ActiveRecord::Migrator.migrate(
+      ActiveRecord::Migrator.migrations_paths, version
+    )
     require "#{__dir__}/db/seeds.rb"
     # for the time being we will  create quests this way, but it would be better to have some seperation here
     require "#{__dir__}/db/quest_seed.rb"
     # for now we will create monsters as well in this seperate file
     require "#{__dir__}/db/monster_seed.rb"
-
-    # should create a schema
-    filename = "db/schema.rb"
-
-    File.open(filename, "w:utf-8") do |file|
-      ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
-    end
   end
 
   private

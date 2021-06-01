@@ -20,14 +20,19 @@ class InventoryController
 
   def show_inventory(character)
     puts Rainbow("These are your items:").blue.bright
-    character.inventory.inventory_items.each do |item|
-      puts "--> #{item.amount} " + Rainbow("#{item.name}").yellow.bright
-    end
-    if character.inventory.weapons
-      puts Rainbow("and your weapons:").blue.bright
-      character.inventory.weapons.each do |weapon|
-        puts "--> #{weapon.amount} " + Rainbow("#{weapon.name}").crimson.bright
+    # Fixed inventory crashing when empty!
+    begin
+      character.inventory.inventory_items.each do |item|
+        puts "--> #{item.amount} " + Rainbow("#{item.name}").yellow.bright
       end
+      if character.inventory.weapons
+        puts Rainbow("and your weapons:").blue.bright
+        character.inventory.weapons.each do |weapon|
+          puts "--> #{weapon.amount} " + Rainbow("#{weapon.name}").crimson.bright
+        end
+      end
+    rescue
+      puts "Empty Inventory!"
     end
   end
 

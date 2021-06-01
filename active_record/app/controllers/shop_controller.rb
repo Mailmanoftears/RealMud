@@ -24,7 +24,7 @@ class ShopController
         puts "...nothing at the moment"
       end
     else
-      puts "There is no shop here..."
+      puts "There is no shop here...😖"
     end
   end
 

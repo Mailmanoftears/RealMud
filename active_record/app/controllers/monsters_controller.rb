@@ -4,10 +4,10 @@ class MonstersController
   end
 
   def check_attack(char)
-    if rand(5).even?
-      puts "Whoa..."
-      fight(char)
-    end
+  #   if rand(5).even?
+  #     puts "Whoa..."
+  #     fight(char)
+  #   end
   end
 
   def fight(char)

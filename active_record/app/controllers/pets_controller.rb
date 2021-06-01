@@ -48,7 +48,7 @@ class PetController
     if pet
       pet.character = char
       pet.save
-      puts Rainbow("You tamed a wild #{pet.kind.downcase}.\nGreat job!").blue
+      puts Rainbow("You tamed a wild #{pet.kind.downcase} 😄.\nGreat job!").blue
     end
   end
 

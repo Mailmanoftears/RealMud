@@ -1,6 +1,10 @@
 class AvatarCreationController
   attr_reader :char
 
+  def initialize
+    @view = CharView.new
+  end
+
   def intro
     puts "
       Welcome to this awesome MUD.\n
@@ -8,7 +12,27 @@ class AvatarCreationController
   end
 
   def create_char
-    @char = Character.new
+    # @char = Character.new
+
+    includes_valid_race = false
+    races = ["orc", "elf", "human", "dwarf"]
+    name = @view.ask_for("name")
+
+
+      race = @view.ask_for("race")
+      race = race.downcase
+
+      if races.include? race
+        character = Character.new(name: name, race: race, y_coord: 0, x_coord: 0)
+        character.alive = true
+        character.save
+        puts "Character created and saved!"
+        includes_valid_race = true
+      else
+        puts "Please enter a valid race."
+      end
+
+
   end
 
   def give_attributes

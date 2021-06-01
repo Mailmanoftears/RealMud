@@ -2,6 +2,7 @@ require "pry-byebug"
 
 class CharactersController
   def initialize
+    @tiles = MapTile.all
     @view = CharView.new
     @pet = PetController.new
     @monster = MonstersController.new
@@ -9,7 +10,15 @@ class CharactersController
 
   def index
     # list all characters ... just for debugging purposes
-    list = Character.where(alive: true)
+    # for some reason this query is not working... : (
+    # list = Character.where(alive: true)
+    list = []
+    Character.all.each do |c|
+      if c.alive?
+        list << c
+      end
+    end
+
     @view.list_all(list)
   end
 
@@ -20,7 +29,7 @@ class CharactersController
       if character.alive
         character
       else
-        puts "sorry that character is dead"
+        puts "Sorry that Character is dead"
       end
     rescue
       puts "Sorry, we cannot find that Character"
@@ -28,18 +37,27 @@ class CharactersController
   end
 
   def create
-    name = @view.ask_for("name")
-    race = @view.ask_for("race")
-    character = Character.new(name: name, race: race, y_coord: 0, x_coord: 0)
-    character.alive = true
-    character.save
   end
 
   def update(character)
     puts "Change your character's name and race"
-    character.name = @view.ask_for(:name)
-    character.race = @view.ask_for(:race)
-    character.save
+    includes_valid_race = false
+    races = ["orc", "elf", "human", "dwarf"]
+    name = @view.ask_for("name")
+
+
+      race = @view.ask_for("race")
+      race = race.downcase
+
+      if races.include? race
+        character = Character.new(name: name, race: race, y_coord: 0, x_coord: 0)
+        character.alive = true
+        character.save
+        puts "Character created and saved 😄!"
+        includes_valid_race = true
+      else
+        puts "Please enter a valid race."
+      end
     @view.give_msg("Update succesful!")
   end
 
@@ -50,7 +68,7 @@ class CharactersController
       character.destroy
       @view.give_msg("You just destroyed that ID!!!")
     rescue
-      puts "No character with that ID... : ("
+      puts "No character with that ID... 😖"
     end
   end
 
@@ -61,7 +79,11 @@ class CharactersController
     tile = MapTile.where(x_coord: char.x_coord, y_coord: char.y_coord).first
 
     if tile
-
+      @tiles.each do |tile|
+        if tile.x_coord == char.x_coord && tile.y_coord == char.y_coord
+          puts Rainbow("[#{tile.name}]").blue
+        end
+      end
       pet = Pet.where(x_coord: char.x_coord, y_coord: char.y_coord).first
       monster = Monster.where(x_coord: char.x_coord, y_coord: char.y_coord).first
       if tile.shop
